@@ -335,7 +335,7 @@ public class WuziqiPanel extends View {
                     (blackPoint.y+(1-pieceOfLineHeight)/2)*mLineHeight,null);
         }
     }
-
+//绘制棋盘
     private void drawBoard(Canvas canvas) {
         int w = mPanelWidth;
         float lineHeight = mLineHeight;
