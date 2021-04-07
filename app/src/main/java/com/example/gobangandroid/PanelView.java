@@ -20,11 +20,12 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WuziqiPanel extends View {
+public class PanelView extends View {
 
     private Paint paint = new Paint();
     private Bitmap whitePiece;
     private Bitmap blackPiece;
+
 
     private float pieceOfLineHeight = 3 * 1.0f / 4;
 
@@ -41,22 +42,45 @@ public class WuziqiPanel extends View {
     private boolean isGameOver;//游戏是否结束
     private boolean isWhiteWinner;//谁是赢家
 
-    public WuziqiPanel(Context context, @Nullable AttributeSet attrs) {
+
+    public PanelView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-
-//        setBackgroundColor(0x44ff0000);
-
         init();
     }
 
+
     private void init(){
         paint.setColor(0x88000000);
-        paint.setAntiAlias(true);
-        paint.setDither(true);
+        paint.setAntiAlias(true);//抗锯齿
+        paint.setDither(true);//防抖动
         paint.setStyle(Paint.Style.STROKE);
 
         whitePiece = BitmapFactory.decodeResource(getResources(),R.mipmap.stone_w2);
         blackPiece = BitmapFactory.decodeResource(getResources(),R.mipmap.stone_b1);
+    }
+//get set 操作方法
+    public boolean getIsWhite() {
+        return isWhite;
+    }
+
+    public ArrayList getWhiteArray() {
+        return whiteArray;
+    }
+
+    public ArrayList getBlackArray() {
+        return blackArray;
+    }
+
+    public void setIsWhite(boolean isWhite) {
+        this.isWhite = isWhite;
+    }
+
+    public void setWhiteArray(ArrayList whiteArray){
+        this.whiteArray = whiteArray;
+    }
+
+    public void setBlackArray(ArrayList blackArray){
+        this.blackArray = blackArray;
     }
 
     public void reStart(){
@@ -64,9 +88,9 @@ public class WuziqiPanel extends View {
         blackArray.clear();
         isGameOver = false;
         isWhiteWinner = false;
-        invalidate();
+        invalidate();//view里包含的一个方法，刷新view
     }
-
+    //视图宽高测量
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
@@ -81,7 +105,7 @@ public class WuziqiPanel extends View {
             width = heightSize;
         else if (heightMode == MeasureSpec.UNSPECIFIED)
             width = widthSize;
-
+        //设置canvas大小
         setMeasuredDimension(width,width);
     }
 
@@ -107,6 +131,8 @@ public class WuziqiPanel extends View {
             int y = (int) event.getY();
             Point p = getPoint(x,y);
 
+
+
             if (whiteArray.contains(p) || blackArray.contains(p)){
                 return false;
             }
@@ -123,20 +149,28 @@ public class WuziqiPanel extends View {
         return true;
     }
 
+
+
+
     private Point getPoint(int x, int y) {
         return new Point((int) (x / mLineHeight), (int) (y / mLineHeight));
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+
+
+
+        //super.onDraw(canvas);
         //绘制棋盘
         drawBoard(canvas);
         //绘制棋子
         drawPiece(canvas);
         //判断输赢
         checkGameOver();
+
     }
+
 
     private void checkGameOver() {
         boolean whiteWin = checkFiveInline(whiteArray);
@@ -335,7 +369,7 @@ public class WuziqiPanel extends View {
                     (blackPoint.y+(1-pieceOfLineHeight)/2)*mLineHeight,null);
         }
     }
-//绘制棋盘
+    //绘制棋盘
     private void drawBoard(Canvas canvas) {
         int w = mPanelWidth;
         float lineHeight = mLineHeight;
