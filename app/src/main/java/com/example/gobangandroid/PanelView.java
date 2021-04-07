@@ -35,7 +35,7 @@ public class PanelView extends View {
     private int MAX_LINE = 20;
     private int MAX_COUNT_INLINE = 5;
 
-    private boolean isWhite = true;//白棋先手，当前轮到白棋
+    private boolean isWhite = false;//黑棋先手，当前轮到黑棋
     private ArrayList<Point> whiteArray = new ArrayList<>();
     private ArrayList<Point> blackArray = new ArrayList<>();
 
